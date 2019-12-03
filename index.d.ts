@@ -23,4 +23,4 @@ export interface Options extends Omit<MinifyOptions, "sourceMap"> {
 
 }
 
-export declare function terser(options?: Options): Plugin;
+export default declare function terser(options?: Options): Plugin;
