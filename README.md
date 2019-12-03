@@ -1,3 +1,9 @@
+This is a fork of https://github.com/TrySound/rollup-plugin-terser that operates on a file level rather than at the chunk level, allowing you do to things like – minifying all node-modules but not application code.
+
+Also this exports `rollup-plugin-terser` as a default export instead of a named export because...
+
+Original readme below -
+
 # rollup-plugin-terser [![Travis Build Status][travis-img]][travis]
 
 [travis-img]: https://travis-ci.org/TrySound/rollup-plugin-terser.svg
