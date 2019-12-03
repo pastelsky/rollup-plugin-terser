@@ -3,7 +3,7 @@ const Worker = require("jest-worker").default;
 const serialize = require("serialize-javascript");
 const { createFilter } = require('rollup-pluginutils');
 
-function terser(userOptions = {}) {
+function conditionalTerser(userOptions = {}) {
   if (userOptions.sourceMap != null) {
     throw Error("sourceMap option is removed, use sourcemap instead");
   }
@@ -11,10 +11,10 @@ function terser(userOptions = {}) {
   const filter = createFilter( userOptions.include, userOptions.exclude, { resolve: false } );
 
   return {
-    name: "terser",
+    name: "conditional-terser",
 
-    renderChunk(code, chunk, outputOptions) {
-      if(!filter(chunk.fileName)){
+    transform(code, id) {
+      if(!filter(id)){
         return null;
       }
 
@@ -30,7 +30,7 @@ function terser(userOptions = {}) {
       // TODO rewrite with object spread after node6 drop
       const normalizedOptions = Object.assign({}, userOptions, {
         sourceMap: userOptions.sourcemap !== false,
-        module: outputOptions.format === "es" || outputOptions.format === "esm"
+        module: false
       });
 
       for (let key of ["include", "exclude", "sourcemap", "numWorkers"]) {
@@ -67,4 +67,4 @@ function terser(userOptions = {}) {
   };
 }
 
-exports.terser = terser;
+module.exports = conditionalTerser
